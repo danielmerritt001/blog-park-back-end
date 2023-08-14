@@ -29,8 +29,20 @@ async function index(req, res) {
   }
 }
 
+async function show(req, res) {
+  try {
+    const blog = await Blog.find(req.params.blogId)
+      .populate(['author', 'comments.author'])
+    res.status(200).json(blog)
+  }
+  catch (error){
+    res.status(500).json(error)
+  }
+}
+
 
 export { 
   create,
-  index
+  index,
+  show
 }
